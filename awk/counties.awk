@@ -1,6 +1,3 @@
-#!/bin/bash
-
-awk '
 {counter=0};
 /[cork]/ {counter++};
 /[galway]/ {counter++};
@@ -34,9 +31,5 @@ awk '
 /[dublin]/ {counter++};
 /[carlow]/ {counter++};
 /[louth]/ {counter++};
-{print $0 " " counter;}' ../data/enable1.txt | \
-
-awk '($2 == 31 && length > m) { m = length; a = $1 } END { print a }'
-
-
-
+counter == 31 {if (length($0) > maxlen) {maxline=$0; maxlen=length;}}
+END { print maxline }
