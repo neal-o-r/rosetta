@@ -1,0 +1,46 @@
+(sainigh laghdaigh (lambda (f lst x)
+  (má (= 1 (fad lst)) 
+    (f (ceann lst) x)
+    (laghdaigh f (tóin lst) (f (ceann lst) x))
+  )
+))
+
+(sainigh suim (lambda (lst) (laghdaigh + lst 0)))
+
+(sainigh is-faide (lambda (lst)
+  (uas (mapáil fad lst))
+))
+
+(sainigh litir-roinnte? (lambda (a b)
+  (uas (mapáil (lambda (x) (i? x b)) a))
+))
+
+
+(sainigh méid-contaetha-roinnte (lambda (focal contaetha)
+  (suim 
+    (mapáil (lambda (c) (litir-roinnte? focal c)) contaetha)
+  )
+))
+
+(sainigh roinnt-31 (lambda (focal contaetha)
+  (= 31 (méid-contaetha-roinnte focal contaetha))
+))
+
+
+(sainigh focail-31 (lambda (focail contaetha)
+  (scag
+    (lambda (f) (roinnt-31 f contaetha))
+  focail
+  )  
+))
+
+(sainigh focal-is-faide (lambda (lst)
+  (sainigh f (is-faide lst))
+  (scag (lambda (x) (= f (fad x))) lst)
+))
+
+
+(sainigh contaetha (léigh-línte (oscail_comhad_ionchuir "../data/counties.txt")))
+(sainigh focail (léigh-línte (oscail_comhad_ionchuir "../data/enable1.txt")))
+
+(scríobh (focal-is-faide (focail-31 focail contaetha)))
