@@ -5,19 +5,19 @@ shareLetter a b = any (\x -> x `elem` b) a
 countTrues list = sum $ map fromEnum list
 
 
-countiesMatch :: [Char] -> [[Char]] -> Int
+countiesMatch :: [Char] -> [[Char]] -> Bool
 countiesMatch word counties = 
         let share = shareLetter word
-        in countTrues $ map share counties
+        in ((countTrues $ map share counties) == 31)
 
 
 comparison :: [[Char]] -> [Char] -> [Char] -> [Char]
-comparison counties w1 w2 =
-        let (long, short) =
-             if length w1 > length w2
-                then (w1, w2) else (w2, w1)
-        in if ((countiesMatch long counties) == 31)
-                then long else short
+comparison counties w1 w2
+        | (length w1 > length w2) && (countiesMatch w1 counties) = w1
+        | (length w1 < length w2) && (countiesMatch w2 counties) = w2
+        | (length w1 > length w2) = w2
+        | (length w1 < length w2) = w1
+        | otherwise = w1
 
 
 main = do  

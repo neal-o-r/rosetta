@@ -17,7 +17,7 @@ def overlap(a: Word, b: Word) -> bool:
     return any(letter in b for letter in a)
 
 
-def counties_overlap(word: Word, county: County) -> int:
+def counties_overlap(word: Word, counties: County) -> int:
     return sum(overlap(word, county) for county in counties)
 
 
