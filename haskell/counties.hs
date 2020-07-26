@@ -1,7 +1,3 @@
-import Data.Ord
-import Data.List
-
-
 shareLetter :: [Char] -> [Char] -> Bool
 shareLetter a b = any (\x -> x `elem` b) a
 
@@ -15,20 +11,17 @@ countiesMatch word counties =
         in countTrues $ map share counties
 
 
-matchPredicate :: [[Char]] -> [Char] -> Bool
-matchPredicate counties word = 31 == (countiesMatch word counties)
+comparison :: [[Char]] -> [Char] -> [Char] -> [Char]
+comparison counties w1 w2 =
+        let (long, short) =
+             if length w1 > length w2
+                then (w1, w2) else (w2, w1)
+        in if ((countiesMatch long counties) == 31)
+                then long else short
 
-
-matchingWords :: [[Char]] -> [[Char]] -> [[Char]]
-matchingWords dictionary counties =
-        let pred = matchPredicate counties
-        in filter pred dictionary
-
-
-longest :: [String] -> String
-longest = maximumBy (comparing length)
 
 main = do  
     counties <- readFile "../data/counties.txt"
     dictionary <- readFile "../data/enable1.txt"
-    print . longest $ matchingWords (lines dictionary) (lines counties)
+    let reduce = foldl (comparison $ lines counties) ""
+    print (reduce $ lines dictionary)
