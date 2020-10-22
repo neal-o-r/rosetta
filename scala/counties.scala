@@ -15,7 +15,7 @@ object Counties {
   }
 
   def comparator(counties: Array[String])(w1: String, w2: String):String = {
-    if ((w1.length > w2.length) && (count_county_matches(w1, counties) == 31)){
+    if (w1.length > w2.length){
       return w1
     } else if ((w1.length < w2.length) && (count_county_matches(w2, counties) == 31)){
       return w2
