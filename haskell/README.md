@@ -1,3 +1,3 @@
 # Haskell
 
-Simple Haskell implementation, undoubtedly missing a lot of potential efficiency gains.
+Simple Haskell implementation, surprisingly fast, pretty much as efficient as the Awk version.
