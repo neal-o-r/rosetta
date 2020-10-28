@@ -22,11 +22,8 @@ def counties_overlap(word: Word, counties: County) -> int:
 
 
 def longest_w_one_overlap(words, counties):
-
-    ws = sorted(words, key=len, reverse=True)
-    for w in ws:
-        if counties_overlap(w, counties) == 31:
-            return w
+    match = lambda x: counties_overlap(x, counties) == 31
+    return next(filter(match, sorted(words, key=len, reverse=True)))
 
 
 if __name__ == "__main__":
