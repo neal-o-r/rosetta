@@ -33,12 +33,13 @@
   )
 
 (defn count-share-counties [word counties]
-  (count-trues (share-states? word counties))
+  (count-trues (share-counties? word counties))
   )
 
 
 (defn longest-mackerel [words counties]
-  (def mackerels (filter #(= (count-share-counties % counties) 49) words))
-  (print (reduce longest mackerels))
+  (def mackerels (filter #(= (count-share-counties % counties) 31) words))
+  (reduce longest mackerels)
   )
 
+(print (longest-mackerel words counties))

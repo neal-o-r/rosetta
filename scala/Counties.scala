@@ -32,5 +32,6 @@ object Counties {
     val longest = words.foldLeft("")(comparator(counties))
     println(longest)
   }
-
 }
+
+Counties.main(Array())
