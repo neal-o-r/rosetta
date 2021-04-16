@@ -4,8 +4,7 @@ Simple Haskell implementation, surprisingly fast, pretty much as efficient as th
 
 ```
 $ time ./counties
-"microspectrophotometries"
 
-real	0m0.338s
-user	0m0.314s
+real	0m0.293s
+user	0m0.257s
 ```
