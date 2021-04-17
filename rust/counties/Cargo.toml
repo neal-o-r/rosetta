@@ -1,7 +1,6 @@
 [package]
 name = "counties"
 version = "0.1.0"
-authors = ["nealo <nealo@spotify.com>"]
 edition = "2018"
 
 [dependencies]

@@ -43,11 +43,28 @@ fn longest_match(words: Vec<String>, counties: Vec<String>) -> String {
     return longest;
 }
 
-fn main() {
-    let counties = readfile("data/counties.txt");
-    let mut words = readfile("data/enable1.txt");
+fn usage() {
+    let name = env!("CARGO_PKG_NAME");
+    println!("{}", name);
+    println!("Usage: {} [counties file] [word file]", name);
+}
+
+fn solve(counties_fname: &str, words_fname: &str) {
+    let counties = readfile(counties_fname);
+    let mut words = readfile(words_fname);
 
     words.sort_by(|a, b| b.len().cmp(&a.len()));
 
     println!("{}", longest_match(words, counties));
+}
+
+
+fn main() {
+
+    let args: Vec<String> = std::env::args().collect();
+    match args.len() {
+        3 => solve(&args[1], &args[2]),
+        _ => usage(),
+    }
+
 }
