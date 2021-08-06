@@ -1,12 +1,12 @@
 # C
 
-A C implementation. Took longer than expected, my C was rustier than I thought. Not a particularly fast implementation, all told.
+A C implementation. Took longer than expected, my C was rustier than I thought.
 
 ```
 $ time ./counties.x
-91368, microspectrophotometries
+microspectrophotometries
 
-real	0m0.360s
-user	0m0.350s
-sys  	0m0.009s
+real	0m0.047s
+user	0m0.041s
+sys	0m0.005s
 ```
