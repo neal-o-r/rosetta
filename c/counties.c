@@ -2,12 +2,12 @@
 #include <string.h>
 #include <stdio.h>
 
-int max_line_len = 100;
+int max_line_len = 32;
 int n_counties = 32;
 int n_words = 172819;
 
 int readFile(FILE *fp, char **data, int lines_allocated) {
-	if (data==NULL) {
+    if (data==NULL) {
       fprintf(stderr,"Out of memory (1).\n");
       exit(1);
     }
@@ -19,18 +19,10 @@ int readFile(FILE *fp, char **data, int lines_allocated) {
 	int i;
     for (i=0;i < lines_allocated; i++) {
         int j;
-
         /* Allocate space for the next line */
         data[i] = malloc(max_line_len);
-        if (data[i]==NULL)
-            {
-            fprintf(stderr,"Out of memory (3).\n");
-            exit(4);
-            }
-        if (fgets(data[i], max_line_len-1, fp)==NULL)
-            break;
-
         /* Get rid of CR or LF at end of line */
+		fgets(data[i], max_line_len-1, fp);
         for (j=strlen(data[i])-1;j>=0 && (data[i][j]=='\n' || data[i][j]=='\r');j--)
             ;
         data[i][j+1]='\0';
@@ -71,26 +63,35 @@ int countCommonCharacters(char* word, char** counties) {
 
 }
 
-int longestMatchIndex(char** counties, char** words) {
-	int index = 10;
+int firstMatchIndex(char** counties, char** words) {
 	int i;
 
 	for(i=0; i < n_words; i++) {
-	  if((countCommonCharacters(words[i], counties) == 31)
-	  && (strlen(words[i]) > strlen(words[index]))) {
-				index = i;
-		}
+	  if(countCommonCharacters(words[i], counties) == 31) {
+	    return i;
+	  }
 	}
-	return index;
+	return i;
 }
 
+int compare(const void *name1, const void *name2)
+{
+    const char *name1_ = *(const char **)name1;
+    const char *name2_ = *(const char **)name2;
+    if ( strlen(name1_) == strlen(name2_) ) return 0;
+    else if ( strlen(name1_) < strlen(name2_) ) return 1;
+    else return -1;
+}
 
 int main() {
-	char **counties = (char **)malloc(sizeof(char*)*n_counties);
-	char **words = (char **)malloc(sizeof(char*)*n_words);
+
+    char **counties = (char **)malloc(sizeof(char*)*n_counties);
+    char **words = (char **)malloc(sizeof(char*)*n_words);
 	readFile(fopen("data/counties.txt", "r"), counties, n_counties);
 	readFile(fopen("data/enable1.txt", "r"), words, n_words);
 
-	int index = longestMatchIndex(counties, words);
-	printf("%d, %s\n", index, words[index]);
+	qsort(words, n_words, sizeof(&words[0]), compare);
+
+	int index = firstMatchIndex(counties, words);
+	printf("%s\n", words[index]);
 }
